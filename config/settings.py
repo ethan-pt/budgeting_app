@@ -83,7 +83,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'budgeting_app.apps.BudgetingAppConfig'
+    'budgeting_app.apps.BudgetingAppConfig',
     'storages'
 ]
 
