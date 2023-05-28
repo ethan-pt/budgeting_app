@@ -18,13 +18,13 @@ class BudgetLogin(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse_lazy() # TODO: add link to default page
+        return reverse_lazy('budget')
     
 
 class BudgetRegister(FormView):
     template_name = 'budgeting_app/register.html'
     form_class = UserCreationForm
-    success_url = reverse_lazy() # TODO: add link to default page
+    success_url = reverse_lazy('budget')
 
     def form_valid(self, form):
         user = form.save()
@@ -36,7 +36,7 @@ class BudgetRegister(FormView):
     
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return reverse_lazy() # TODO: add link to default page
+            return reverse_lazy('budget')
 
 
 class BudgetList(LoginRequiredMixin, ListView):
