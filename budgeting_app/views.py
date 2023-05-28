@@ -39,7 +39,7 @@ class BudgetRegister(FormView):
             return reverse_lazy('budget')
 
 
-class BudgetList(LoginRequiredMixin, ListView):
+class TransactionList(LoginRequiredMixin, ListView):
     model = BudgetInfo
     context_object_name = 'budget'
 
@@ -56,7 +56,7 @@ class BudgetList(LoginRequiredMixin, ListView):
         return context
     
 
-class BudgetDetail(LoginRequiredMixin, DetailView):
+class TransactionDetail(LoginRequiredMixin, DetailView):
     model = BudgetInfo
     context_object_name = 'budget'
 
