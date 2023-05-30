@@ -37,6 +37,8 @@ class BudgetRegister(FormView):
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
             return reverse_lazy('budget')
+        
+        return super(BudgetRegister, self).get(*args, **kwargs)
 
 
 class TransactionList(LoginRequiredMixin, ListView):
