@@ -8,6 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
+from django.db.models import Sum
+
 from .models import BudgetInfo
 
 
@@ -45,9 +47,23 @@ class TransactionList(LoginRequiredMixin, ListView):
     model = BudgetInfo
     context_object_name = 'budget'
 
+    def balance_handler(self, balance):
+        if balance.is_integer():
+            return round(balance)
+        
+        else:
+            return round(balance, 2)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['budget'] = context['budget'].filter(user=self.request.user)
+
+        balance = context['budget'].aggregate(Sum('amount'))['amount__sum']
+        if balance:
+            context['balance'] = self.balance_handler(balance)
+            
+        else:
+            context['balance'] = 0
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
