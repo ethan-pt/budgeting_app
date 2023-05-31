@@ -6,7 +6,6 @@ from django.utils import timezone
 
 class BudgetInfo(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    balance = models.FloatField(default=0.00)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=100)
