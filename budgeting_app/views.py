@@ -47,7 +47,7 @@ class TransactionList(LoginRequiredMixin, ListView):
     model = BudgetInfo
     context_object_name = 'budget'
 
-    def balance_handler(self, balance):
+    def int_check(self, balance):
         if balance.is_integer():
             return round(balance)
         
@@ -61,10 +61,10 @@ class TransactionList(LoginRequiredMixin, ListView):
         balance = context['budget'].aggregate(Sum('amount'))['amount__sum']
         if balance:
             if balance > 0:
-                context['balance'] = f"${self.balance_handler(balance)}"
+                context['balance'] = f"${self.int_check(balance)}"
             
             else:
-                context['balance'] = f"-${abs(self.balance_handler(balance))}"
+                context['balance'] = f"-${abs(self.int_check(balance))}"
             
         else:
             context['balance'] = "$0"
