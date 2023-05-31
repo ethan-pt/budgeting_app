@@ -10,7 +10,7 @@ class BudgetInfo(models.Model):
     description = models.TextField(null=True, blank=True)
     category = models.CharField(max_length=100)
     amount = models.FloatField(default=0.00)
-    date = models.DateField(default=timezone.now, blank=False)
+    date = models.DateTimeField(default=timezone.now, blank=False)
 
     def __str__(self):
         return self.title
