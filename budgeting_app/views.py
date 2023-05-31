@@ -60,10 +60,14 @@ class TransactionList(LoginRequiredMixin, ListView):
 
         balance = context['budget'].aggregate(Sum('amount'))['amount__sum']
         if balance:
-            context['balance'] = self.balance_handler(balance)
+            if balance > 0:
+                context['balance'] = f"${self.balance_handler(balance)}"
+            
+            else:
+                context['balance'] = f"-${abs(self.balance_handler(balance))}"
             
         else:
-            context['balance'] = 0
+            context['balance'] = "$0"
 
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
