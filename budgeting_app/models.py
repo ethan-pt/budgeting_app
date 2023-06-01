@@ -16,4 +16,4 @@ class BudgetInfo(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
