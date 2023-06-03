@@ -47,6 +47,7 @@ class TransactionList(LoginRequiredMixin, ListView):
     model = BudgetInfo
     context_object_name = 'budget'
 
+    # If balance is a whole number, display a whole number, else round to two decimal places
     def int_check(self, balance):
         if balance.is_integer():
             return round(balance)
@@ -58,6 +59,7 @@ class TransactionList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['budget'] = context['budget'].filter(user=self.request.user)
 
+        # Does balance calculation, makes sure negative symbol is formatted correctly
         balance = context['budget'].aggregate(Sum('amount'))['amount__sum']
         if balance:
             if balance > 0:
@@ -69,6 +71,7 @@ class TransactionList(LoginRequiredMixin, ListView):
         else:
             context['balance'] = "$0"
 
+        # Search function
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
             context['budget'] = context['budget'].filter(title__icontains=search_input).union(context['budget'].filter(category__icontains=search_input))
