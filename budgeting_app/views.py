@@ -47,26 +47,25 @@ class TransactionList(LoginRequiredMixin, ListView):
     model = BudgetInfo
     context_object_name = 'budget'
 
-    # If balance is a whole number, display a whole number, else round to two decimal places
-    def int_check(self, balance):
-        if balance.is_integer():
-            return round(balance)
-        
-        else:
-            return round(balance, 2)
+    # Formats dollar sign based on whether or not balance is negative
+    def format_negative(self, balance):
+        if balance >= 0:
+            return f"${balance}"
+
+        return f"-${abs(balance)}"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['budget'] = context['budget'].filter(user=self.request.user)
 
-        # Does balance calculation, makes sure negative symbol is formatted correctly
         balance = context['budget'].aggregate(Sum('amount'))['amount__sum']
+        # If balance is a whole number, round to whole number, else round to the nearest hundredth
         if balance:
-            if balance > 0:
-                context['balance'] = f"${self.int_check(balance)}"
+            if balance.is_integer():
+                context['balance'] = self.format_negative(round(balance))
             
             else:
-                context['balance'] = f"-${abs(self.int_check(balance))}"
+                context['balance'] = self.format_negative(round(balance), 2)
             
         else:
             context['balance'] = "$0"
