@@ -6,7 +6,7 @@ from collections import OrderedDict
 
 register = template.Library()
 
-# Sort transactions by selected heading, reversing the order on second click
+# TODO: Sort transactions by selected heading, reversing the order on second click
 @register.simple_tag
 def url_replace(data, value, direction=''):
     pass
