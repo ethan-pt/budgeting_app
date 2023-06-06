@@ -78,11 +78,6 @@ class TransactionList(LoginRequiredMixin, ListView):
         context['search_input'] = search_input
 
         return context
-    
-
-class TransactionDetail(LoginRequiredMixin, DetailView):
-    model = BudgetInfo
-    context_object_name = 'budget'
 
 
 class TransactionCreate(LoginRequiredMixin, CreateView):
