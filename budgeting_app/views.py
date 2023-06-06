@@ -65,7 +65,7 @@ class TransactionList(LoginRequiredMixin, ListView):
                 context['balance'] = self.format_negative(round(balance))
             
             else:
-                context['balance'] = self.format_negative(round(balance), 2)
+                context['balance'] = self.format_negative(round(balance, 2))
             
         else:
             context['balance'] = "$0"
