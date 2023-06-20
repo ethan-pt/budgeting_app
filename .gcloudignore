@@ -3,3 +3,4 @@
 .gitignore
 __pycache__
 cloud-sql-proxy.x64.exe
+README.md
